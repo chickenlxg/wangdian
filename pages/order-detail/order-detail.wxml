@@ -1,0 +1,73 @@
+<import src="../../templates/toast/toast.wxml" />
+<scroll-view class="main" scroll-y="true" class="{{!loading ? '':'hidden'}} order-confirm">
+  <view class="">
+    <view class="address" bindtap="navigateToAddress">
+      <image class="top-line" src="../settlement/images/line.png"></image>
+      <view class="content">
+        <image class="address_icon" src="../settlement/images/address.png"></image>
+        <view class="address_text">
+          <view class="adr">
+            <text>{{address.consignee}}</text>
+            <text class='tel'>{{address.mobile}}</text>
+          </view>
+          <view class="ddress">
+            <text>{{address.address}}</text>
+          </view>
+        </view>
+        <image class="arrow" wx:if="{{ order.orderStatus==='待付款' }}" src="../settlement/images/arrow.png"></image>
+      </view>
+      <image class="bottom-line" src="../settlement/images/line.png"></image>
+    </view>
+    <view class="items-list">
+      <view wx:for="{{cartList}}" wx:for-item="product" class="product">
+        <view class="img">
+          <image class="image" src="{{product.covers_image}}" mode="scaleToFill"></image>
+        </view>
+        <view class="param">
+          <view class="title">
+            <text>{{product.goods_name}}</text>
+          </view>
+          <view class="price">
+            <view class="real" wx:if="{{ product.goods_price!='0' }}"> {{product.goods_price}} 积分
+              <view class="num">x{{product.PNUM}}</view>
+            </view>
+            <view class="real" wx:if="{{ product.goods_price=='0' }}"> {{product.market_price}} 元
+              <view class="num">x{{product.PNUM}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="statistics">
+      <view class="border-bottom" wx:if="{{ wxpay==='0' }}"> 商品总额
+        <text> {{totalPay}} 积分</text>
+      </view>
+      <view class="border-bottom" wx:if="{{ wxpay==='1' }}"> 商品总额
+        <text> {{wxPrice}} 元</text>
+      </view>
+    </view>
+    <view class="item-amount">
+      <view class="last-child colora0">
+        <text>订单编号：{{order.orderSn}}</text>
+      </view>
+      <view class="last-child colora0">
+        <text>创建时间：{{order.creatTime}}</text>
+      </view>
+    </view>
+    <view class="btn-line" hidden="{{order.isButtonShow}}">
+      <button class="btn-order btn-solid-red" wx:if="{{ order.orderStatus==='待付款' }}" bindtap="payOrder" data-order-sn="{{order.orderSn}}">去支付</button>
+
+      <button class="btn-order btn-hollow-gray" wx:if="{{ order.orderStatus==='待付款' }}" bindtap="cancelOrder" data-order-sn="{{order.orderSn}}">取消订单</button>
+
+      <button class="btn-order btn-hollow-gray" wx:if="{{ order.orderStatus==='待发货'&&order.refund_status === '没有售后' }}" bindtap="drawbackOrder" data-order-sn="{{order.orderSn}}">申请退款</button>
+      <button class="btn-order btn-hollow-gray" wx:if="{{ order.orderStatus==='待收货' }}" bindtap="logistics" data-order-sn="{{order.orderSn}}">查看物流</button>
+
+      <button class="btn-order btn-solid-red" wx:if="{{ order.orderStatus==='待收货' }}" bindtap="confirmOrder" data-order-sn="{{order.orderSn}}">确认收货</button>
+
+      <button wx:if="{{ order.orderStatus==='交易成功'||order.orderStatus==='交易关闭'||order.orderStatus==='订单关闭'}}" bindtap="deleteOrder" data-order-sn="{{order.orderSn}}">删除订单</button>
+    </view>
+  </view>
+  <template is="toast" data="{{...toast}}" />
+</scroll-view>
+<loading hidden="{{!loading}}">正在加载中...</loading>
+<loading hidden="{{!exec}}">正在处理中...</loading>

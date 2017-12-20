@@ -1,0 +1,81 @@
+<import src="../../../templates/mm-tips/mm-tips.wxml" />
+
+<scroll-view scroll-y="trues" class="user">
+  <view class="info">
+    <view class="info-wrap">
+      <image class="info-icon" src="{{userImgInfo.avatarUrl}}" ></image>
+      <view class="info-name">{{userImgInfo.nickName}}</view>
+    </view>
+  </view>  <form  bindsubmit="submitBtn">
+    <view class="section">
+      <view class="section-item">
+        <text class="section-item-left">真实姓名</text>
+        <input name="name" class="section-item-right"  value='{{userInfo.real_name}}' />
+      </view>
+      <view class="section-item">
+        <text class="section-item-left">身份证号</text>
+        <input name="idcard" class="section-item-right" value='{{userInfo.idcard}}'  />
+      </view>
+      <view class="section-item">
+        <text class="section-item-left">出生年月</text>
+        <picker mode="date" name="age" value="{{age}}" start="1900-01-01" end="2099-01-01" bindchange="listenerAgeInput" >
+          <view class="picker"> {{age}} </view>
+        </picker>
+      </view>
+      <view class="section-item">
+        <text class="section-item-left">联系方式</text>
+        <input name="mobile" type='number' value="{{userInfo.telephone}}" class="section-item-right" placeholder="请输入手机号" />
+      </view>
+      <view class="section-item">
+        <text class="section-item-left">地址</text>
+        <input name="city" class="section-item-right" value="{{userInfo.city}}" />
+      </view>
+      <view class="section-item">
+        <text class="section-item-left">工作单位</text>
+        <input name="company" class="section-item-right" value="{{userInfo.company}}" />
+      </view>
+      <view class="section-item">
+        <text class="section-item-left">月收入</text>
+        <input name="cash" type='number' class="section-item-right" value="{{userInfo.cash}}"  />元
+      </view>
+      <view class="section-item">
+        <text class="section-item-left">病情症状</text>
+        <input name="sickness" class="section-item-right" value="{{userInfo.sickness}}" />
+      </view>
+      <view class="section-item">
+        <text class="section-item-left">在服产品1</text>
+        <input name="medicine1" class="section-item-right" value="{{userInfo.medicine1}}" />
+      </view>
+      <view class="section-item">
+        <text class="section-item-left">在服产品2</text>
+        <input name="medicine2" class="section-item-right" value="{{userInfo.medicine2}}" />
+      </view>
+      <view class="section-item">
+        <text class="section-item-left">在服产品3</text>
+        <input name="medicine3" class="section-item-right" value="{{userInfo.medicine3}}" />
+      </view>
+      <view class="section-item">
+        <text class="section-item-left">健康管理师</text>
+        <picker name="healthmanager" bindchange="bindPickerChange" value="{{index}}" range="{{healthmanagerarray}}">
+          <view class="picker">
+            <text style='color:gray;' wx:if="{{ index=='' }}">请选择</text>{{healthmanagerarray[index]}}
+          </view>
+        </picker>
+      </view>
+      <view class="section-item">
+        <text class="section-item-left">存货量</text>
+        <input name="goodsnum" type='number' class="section-item-right" value="{{userInfo.goodsnum}}" />
+      </view>
+      <view class="section-item">
+        <text class="section-item-left">障碍点</text>
+        <input name="errorpoint" class="section-item-right" value="{{userInfo.errorpoint}}" />
+      </view>
+    </view>
+
+    <view class="btn-area">
+      <button class='btn' formType="submit" >更改信息</button>
+    </view>
+  </form>
+
+</scroll-view>
+<template is="mm-tips" data="{{...tipsData}}"></template>

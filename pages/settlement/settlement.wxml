@@ -1,0 +1,69 @@
+<import src="../../templates/toast/toast.wxml" />
+<scroll-view class="main" scroll-y="true" class="{{!loading ? '':'hidden'}} order-confirm">
+  <view class="">
+    <view class="address" bindtap="navigateToAddress">
+      <image class="top-line" src="images/line.png"></image>
+      <view class="content">
+        <image class="address_icon" src="images/address.png"></image>
+        <view class="address_text">
+          <view class="adr">
+            <text>{{address.consignee}}</text>
+            <text class='tel'>{{address.mobile}}</text>
+          </view>
+          <view class="ddress">
+            <text>{{address.address}}</text>
+          </view>
+        </view>
+        <image class="arrow" src="images/arrow.png"></image>
+      </view>
+      <image class="bottom-line" src="images/line.png"></image>
+    </view>
+    <view class="items-list">
+      <view wx:for="{{cartList}}" wx:for-item="product" class="product">
+        <view class="img">
+          <image class="image" src="{{product.covers_image}}" mode="scaleToFill"></image>
+        </view>
+        <view class="param">
+          <view class="title">
+            <text>{{product.goods_name}}</text>
+          </view>
+          <view class="price">
+            <view class="real" wx:if="{{ product.goods_price!='0' }}"> {{product.goods_price}} 积分
+              <view class="num">x{{product.PNUM}}</view>
+            </view>
+            <view class="real" wx:if="{{ product.goods_price=='0' }}"> {{product.market_price}} 元
+              <view class="num">x{{product.PNUM}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="item-amount">
+      <view class="border-bottom"> 商品总额
+        <text wx:if="{{ totalPay!='0' }}"> {{totalPay}} 积分</text>
+        <text wx:if="{{ totalPay=='0' }}"> {{masterPrice}} 元</text>
+      </view>
+      <view class="border-bottom" wx:if="{{ totalPay!='0' }}"> 现有积分
+        <text> {{userIntegral}} 积分</text>
+      </view>
+    </view>
+    <view class="settlement"  wx:if="{{ totalPay!='0' }}">
+      <view class="text">
+        <text>合计：</text>
+        <text class="price"> {{totalPay}} 积分</text>
+      </view>
+      <button bindtap="postOrder">积分支付</button>
+    </view>
+    <view class="settlement2">
+      <view class="text">
+        <text wx:if="{{ totalPay!='0' }}">折合现金：</text>
+        <text wx:if="{{ totalPay=='0' }}">总计：</text>
+        <text class="price"> {{wxPay}} 元</text>
+      </view>
+      <button bindtap="wxpostOrder">微信支付</button>
+    </view>
+  </view>
+  <template is="toast" data="{{...toast}}" />
+</scroll-view>
+<loading hidden="{{!loading}}">正在加载中...</loading>
+<loading hidden="{{!exec}}">正在处理中...</loading>

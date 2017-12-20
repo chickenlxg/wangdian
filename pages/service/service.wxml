@@ -1,0 +1,35 @@
+<view class="order">
+  <text class="order-title">咨询服务</text>
+  <view class="order-con" bindtap="signbtn" wx:if="{{sign == '0'}}">
+    <view class="orders">
+      <button >
+      <image class="orders-image" src="../user/images/tel.png"></image>
+      <text class="orders-text" >每日签到</text>
+      </button>
+    </view>
+  </view>
+  <view class="order-con"  wx:if="{{sign == '1'}}">
+    <view class="orders">
+      <button >
+      <image class="orders-image" src="../user/images/tel.png"></image>
+      <text class="orders-text" >今日已签到</text>
+      </button>
+    </view>
+  </view>
+  <view class="order-con" bindtap="scanCode">
+    <view class="orders">
+      <button >
+      <image class="orders-image" src="../user/images/tel.png"></image>
+      <text class="orders-text">参会扫码扫码</text>
+      </button>
+    </view>
+  </view>
+  <view class="order-con" bindtap="goNormal">
+    <view class="orders">
+      <button open-type="contact">
+      <image class="orders-image" src="../user/images/tel.png"></image>
+      <text class="orders-text">客服</text>
+      </button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,70 @@
+<import src="../../templates/toast/toast.wxml" />
+<view id="shopping-cart" class="{{(cartList.length==0 && !loading) ? '':'hidden'}}">
+  <view class="empty">
+    <image class="icon" src="https://www.jntyfjk.com/get/web/pic/cart.png" alt="购物车"></image>
+    <text>购物车还空着，快去挑选商品吧</text>
+    <view class="btn btn-default" ui-sref="home" catchtap='navigateTo'>随便逛逛</view>
+  </view>
+</view>
+<scroll-view class="car-index {{(cartList.length>0 && !loading) ? '':'hidden'}}" scroll-y="true">
+  <view class="car">
+    <view class="cart {{(cartList.length>0 && !loading) ? '':'hidden'}}">
+      <view wx:for="{{cartList}}" wx:for-item="product" class="product">
+        <view class="checkbox clearfix add-btn">
+          <icon type="{{product.status ? 'success' : 'circle'}}" color="{{product.status ? 'red' : ''}}" size="20" bindtap="selectProduct" data-checked-status="{{checkedStatus}}" data-id="{{product.pid}}"></icon>
+        </view>
+        <view class="img">
+          <image class="image" src="{{product.covers_image}}" mode="scaleToFill"></image>
+        </view>
+        <view class="param">
+          <view class="title">
+            <text>{{product.goods_name}}</text>
+          </view>
+          <view class="type">
+            <text>{{product.goods_attr}}</text>
+          </view>
+          <view class="quantity">
+            <view class="btn-ad {{product.decr_class}}" bindtap="changeNumber" data-id="{{product.pid}}" data-type="min">-</view>
+            <view class="count">{{product.PNUM}}</view>
+            <view class="btn-ad {{product.plus_class}}" bindtap="changeNumber" data-id="{{product.pid}}" data-type="plus">+</view>
+          </view>
+          <view class="price">
+            <view class="real" wx:if="{{ product.goods_price!=='0' }}">{{product.goods_price}} 积分</view>
+            <view class="real" wx:if="{{ product.goods_price==='0' }}">{{product.market_price}} 元</view>
+            <view class="cost" wx:if="{{ product.goods_price!=='0' }}">￥ {{product.market_price}}</view>
+          </view>
+          <view class="del" bindtap="delProduct" data-id="{{product.pid}}">
+            <image src="https://www.jntyfjk.com/get/web/pic/delete.png"></image>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="statistics">
+      共{{totalNumber}}件商品
+      <view class="sum">
+        小计：
+        <text wx:if="{{ totalPrice!='0'&&mastertotalPrice=='0'}}">{{totalPrice}} 积分   </text>
+        <text wx:if="{{ mastertotalPrice!='0'&&totalPrice=='0'}}">{{mastertotalPrice}} 元 </text>
+        <text wx:if="{{ mastertotalPrice!='0'&&totalPrice!='0'}}">{{totalPrice}} 积分,{{mastertotalPrice}} 元 </text>
+      </view>
+    </view>
+  </view>
+  <view class="balance">
+    <view class="checkbox">
+      <icon type="{{checkedStatus ? 'success' : 'circle'}}" color="{{checkedStatus ? 'red' : ''}}" size="20" bindtap="selectProduct" data-id="0" data-checked-status="{{checkedStatus}}"></icon>
+      <text>全选</text>
+    </view>
+    <button class="button" bindtap="toSettlement">结算({{buyNumber}})</button>
+    <view class="price">
+      合计：
+      <view class="sum">
+        <text wx:if="{{ buyPrice!='0'&&masterbuyPrice=='0'}}">{{buyPrice}} 积分   </text>
+        <text wx:if="{{ masterbuyPrice!='0'&&buyPrice=='0'}}">{{masterbuyPrice}} 元 </text>
+        <text wx:if="{{ masterbuyPrice!='0'&&buyPrice!='0'}}">{{buyPrice}} 积分,{{masterbuyPrice}} 元 </text>
+      </view>
+      <view class="hint">不含运费</view>
+    </view>
+  </view>
+  <template is="toast" data="{{...toast}}" />
+</scroll-view>
+<loading hidden="{{!loading}}">正在加载中...</loading>
