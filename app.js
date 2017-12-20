@@ -2,6 +2,7 @@ App({
   onLaunch: function () {
     wx.login({
       success: res => {
+        
         if (res.code) {
           wx.request({
             url: this.serverURL + '/get/web/userinfo.php',
@@ -9,6 +10,7 @@ App({
               code: res.code
             },
             success: res => {
+              console.log(res);
               this.globalData.userID = res.data;
               wx.request({
                 url: this.serverURL + '/get/web/isUser.php',
@@ -35,7 +37,7 @@ App({
       }
     })
   },
-  serverURL: 'https://www.jntyfjk.com',
+  serverURL: 'https://www.yueermusic.com',
   globalData: {
     userInfo: null,
     userID: null,

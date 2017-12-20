@@ -1,7 +1,7 @@
 <import src="../../templates/toast/toast.wxml" />
 <view id="shopping-cart" class="{{(cartList.length==0 && !loading) ? '':'hidden'}}">
   <view class="empty">
-    <image class="icon" src="https://www.jntyfjk.com/get/web/pic/cart.png" alt="购物车"></image>
+    <image class="icon" src="https://www.yueermusic.com/get/web/pic/cart.png" alt="购物车"></image>
     <text>购物车还空着，快去挑选商品吧</text>
     <view class="btn btn-default" ui-sref="home" catchtap='navigateTo'>随便逛逛</view>
   </view>
@@ -34,7 +34,7 @@
             <view class="cost" wx:if="{{ product.goods_price!=='0' }}">￥ {{product.market_price}}</view>
           </view>
           <view class="del" bindtap="delProduct" data-id="{{product.pid}}">
-            <image src="https://www.jntyfjk.com/get/web/pic/delete.png"></image>
+            <image src="https://www.yueermusic.com/get/web/pic/delete.png"></image>
           </view>
         </view>
       </view>

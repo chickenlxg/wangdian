@@ -3,7 +3,7 @@
   <view class="p">我们将发送验证码到您的手机</view>
   <view class="tel-input-wrapper">
     <view class="tel-input">
-      <image src="https://www.jntyfjk.com/get/web/pic/tel.png" alt=""></image>
+      <image src="https://www.yueermusic.com/get/web/pic/tel.png" alt=""></image>
       <input type="tel" placeholder="请输入11位手机号码" maxlength="11" class="ng-pristine ng-valid ng-empty ng-valid-maxlength ng-touched" />
     </view>
   </view>
