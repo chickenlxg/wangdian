@@ -51,40 +51,99 @@ Page({
     let data = event.currentTarget.dataset
     let total = this.data.total
     let menus = this.data.categories
-    console.log(menus);
-
-    dish.count += 1;
-    total.count += 1
-    total.money += dish.price
-    this.setData({
-      'menus': menus,
-      'total': total
-    })
+    this.data.categories.forEach(item => {
+      item.goods.forEach(
+        item2 => {
+          if (item2.id == data.id) {
+            let dish = item2
+            dish.count *= 1
+            dish.count += 1
+            total.count += 1
+            total.money += dish.price
+            if (dish.count == '1') {
+              wx.request({
+                url: app.serverURL + '/get/web/addcart.php',
+                data: {
+                  user_id: app.globalData.userID,
+                  goods_id: dish.id,
+                  goods_number: dish.count
+                },
+                header: {
+                  'content-type': 'application/json'
+                }
+              })
+            } else {
+              wx.request({
+                url: app.serverURL + '/get/web/cateProductNumChange.php',
+                header: {
+                  'content-type': 'application/json'
+                },
+                data: {
+                  userID: app.globalData.userID,
+                  pid: dish.id,
+                  productNum: dish.count
+                }
+              })
+            }
+            this.setData({
+              'categories': menus,
+              'total': total
+            })
+          }
+        }
+      )
+    });
   },
   minusCount: function (event) {
     let data = event.currentTarget.dataset
     let total = this.data.total
-    let menus = this.data.menus
-    let menu = menus.find(function (v) {
-      return v.id == data.cid
-    })
-    let dish = menu.dishs.find(function (v) {
-      return v.id == data.id
-    })
-    if (dish.count <= 0)
-      return
-    dish.count -= 1;
-    total.count -= 1
-    total.money -= dish.price
-    this.setData({
-      'menus': menus,
-      'total': total
-    })
+    let menus = this.data.categories
+    this.data.categories.forEach(item => {
+      item.goods.forEach(
+        item2 => {
+          if (item2.id == data.id) {
+            let dish = item2
+            dish.count *= 1
+            dish.count -= 1;
+            total.count -= 1
+            total.money -= dish.price
+            if (dish.count == '0') {
+              wx.request({
+                url: app.serverURL + '/get/web/cateCartDel.php',
+                data: {
+                  userID: app.globalData.userID,
+                  pid: dish.id
+                },
+                header: {
+                  'content-type': 'application/json'
+                }
+              })
+            } else {
+              wx.request({
+                url: app.serverURL + '/get/web/cateProductNumChange.php',
+                header: {
+                  'content-type': 'application/json'
+                },
+                data: {
+                  userID: app.globalData.userID,
+                  pid: dish.id,
+                  productNum: dish.count
+                }
+              })
+            }
+            this.setData({
+              'categories': menus,
+              'total': total
+            })
+          }
+        }
+      )
+    });
   },
-  onLoad() {
+  onShow() {
     var that = this;
     wx.request({
-      url: app.serverURL + '/get/web/cateActivity.php', 
+      url: app.serverURL + '/get/web/cateActivity.php',
       header: {
         'content-type': 'application/json'
       },
