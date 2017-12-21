@@ -1,7 +1,77 @@
-<scroll-view class="category-list" scroll-y="true">
-  <view class="category" wx:for="{{categories}}" wx:for-item="category"
-   data-cate-id="{{category.link_id}}" data-activity-title="{{category.title}}"  bindtap="navigateToCategoryProduct">
-    <image mode="aspectFill" src="{{category.image_src}}"></image>
-    <text>{{category.title}}</text>
+<view class="index">
+  <view class="cart-tab-wrp">
+    <view class="cart-item-total cart-tab-item">
+      <view class="cart-item-icon-wrp">
+        <image class="cart-item-icon" src="./pic/orderBox.png" />
+        <text hidden="{{total.count}}" class="cart-item-total-num bc_red">{{total.count}}</text>
+      </view>
+      <text class="cart-item-total-price">￥{{total.money}}</text>
+    </view>
+    <view class="cart-tab-item">
+      <navigator url="../Order/cert/cert?title=确认" class="cart-tab-item-btn" hover-class="navigator-hover">选好了</navigator>
+    </view>
   </view>
-</scroll-view>
+  <view class="menu-wrp">
+    <scroll-view scroll-y="true" class="left-side">
+      <!--菜单列表-->
+      <block wx:for="{{categories}}" wx:key="id" wx:for-item="menu">
+        <view class="menu-item" data-id="{{menu.id}}" data-tag="{{menu.link_url}}" bindtap="selectMenu">
+          <view class="menu-item-wrp">
+            <view class="{{selectedMenuId == menu.id ? 'bc_red' : 'bc_gray'}} m-item-icon">
+              <image class="image" src="./pic/ding-ico1.png" />
+            </view>
+            <view>
+              <text class="m-item-title">{{menu.title}}</text>
+            </view>
+          </view>
+        </view>
+      </block>
+      <view class="menu-footer"></view>
+    </scroll-view>
+
+    <scroll-view scroll-y="true" scroll-into-view="{{toView}}" class="right-side">
+      <view class="dish-header"></view>
+      <block wx:for="{{categories}}" wx:key="id" wx:for-item="menu">
+        <view>
+          <view id="{{menu.link_url}}" class="dish-category-title">{{menu.title}}</view>
+          <block wx:for="{{menu.goods}}" wx:key="id" wx:for-item="dish">
+            <view class="dish-item">
+              <view class="dish-item-wrp">
+                <view class="dish-item-pic">
+                  <image class="image" src="{{dish.covers_image}}" />
+                </view>
+                <view class="dish-item-info" style="">
+                  <view>
+                    <text class="dish-item-name">{{dish.goods_name}}</text>
+                  </view>
+                  <view>
+                    <text class="dish-item-sales">月销量{{dish.sold_count}}</text>
+                  </view>
+                  <view>
+                    <text class="dish-item-money">¥{{dish.goods_price}}</text>
+                  </view>
+                </view>
+
+                <view class="dish-item-count" style="">
+                  <view class="dish-item-tab">
+                    <view hidden="{{dish.count == 0}}" class="dish-item-count-minus" data-id="{{dish.id}}" data-cid="{{menu.id}}" bindtap="minusCount">
+                      <image class="image" src="./pic/countMinus.png" />
+                    </view>
+                  </view>
+                  <view class="dish-item-count-text dish-item-tab">
+                    <text hidden="{{dish.count == 0}}">{{dish.count}}</text>
+                  </view>
+                  <view class="dish-item-count-plus" data-id="{{dish.id}}" data-cid="{{menu.id}}" bindtap="addCount">
+                    <image class="image" src="./pic/countSelAdd.png" />
+                  </view>
+                </view>
+              </view>
+            </view>
+          </block>
+
+        </view>
+      </block>
+      <view class="dish-footer"></view>
+    </scroll-view>
+  </view>
+</view>
