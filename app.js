@@ -10,7 +10,6 @@ App({
               code: res.code
             },
             success: res => {
-              console.log(res);
               this.globalData.userID = res.data;
               wx.request({
                 url: this.serverURL + '/get/web/isUser.php',

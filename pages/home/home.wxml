@@ -21,32 +21,58 @@
     </view>
   </view>
 
-  <view class="section feature-list">
-    <view class="feature-header">
-      <icon>
-        <image class="header-img" src="./images/feature.png"></image>
-      </icon>
-      <text>热销商品</text>
-    </view>
-    <block wx:for="{{features}}" wx:for-item="feature">
-      <view wx:if="{{feature.is_sold_out}}" class="feature clearfix" data-goods-id="{{feature.id}}">
-        <image mode="aspectFill" src="{{feature.covers_image}}"></image>
-        <view class="sold-out-overlay">
-          <text class="sold-out-tag">已售罄</text>
-        </view>
-        <view class="title-wrapper">
-          <label class="title">{{feature.goods_name}}</label>
-        </view>
-        <label class="sold-out-price">¥ {{feature.goods_price}}</label>
-      </view>
-      <view wx:else class="feature clearfix" data-product-id="{{feature.id}}" bindtap="navigateToProduct">
-        <image mode="aspectFill" src="{{feature.covers_image}}"></image>
-        <view class="title-wrapper">
-          <label class="title">{{feature.goods_name}}</label>
-        </view>
-        <label class="price" wx:if="{{ feature.goods_price!=='0' }}">{{feature.goods_price}} 积分</label>
-        <label class="price" wx:if="{{ feature.goods_price==='0' }}">{{feature.market_price}} 元</label>
-      </view>
-    </block>
+  <view class="feature-header">
+    <icon>
+      <image class="header-img" src="./images/feature.png"></image>
+    </icon>
+    <text>限时优惠</text>
   </view>
+  <view class="myTrump">
+    <scroll-view scroll-x-="true" class="content">
+      <block wx:for="{{features}}" wx:key="index">
+        <view class="someTrumps">
+          <view class="trumps">
+            <image src="{{item.covers_image}}" />
+            <view class="mes">
+              <text class="foodName">{{item.goods_name}}</text>
+              <view class="special">特价</view>
+              <p>￥{{item.goods_price}}</p>
+              <view class="btn" bindtap="ordinInCart" data-id="{{item.id}}" data-stock="{{item.stock}}">
+                <icon type="{{item.selected ? 'success' : 'circle'}}" color="#23a3ff" size="30"></icon>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </scroll-view>
+  </view>
+
+
+  <view class="feature-header">
+    <icon>
+      <image class="header-img" src="./images/feature.png"></image>
+    </icon>
+    <text>热销商品</text>
+  </view>
+  <block wx:for="{{features}}" wx:for-item="feature">
+    <view wx:if="{{feature.is_sold_out}}" class="feature clearfix" data-goods-id="{{feature.id}}">
+      <image mode="aspectFill" src="{{feature.covers_image}}"></image>
+      <view class="sold-out-overlay">
+        <text class="sold-out-tag">已售罄</text>
+      </view>
+      <view class="title-wrapper">
+        <label class="title">{{feature.goods_name}}</label>
+      </view>
+      <label class="sold-out-price">¥ {{feature.goods_price}}</label>
+    </view>
+    <view wx:else class="feature clearfix" data-product-id="{{feature.id}}" bindtap="navigateToProduct">
+      <image mode="aspectFill" src="{{feature.covers_image}}"></image>
+      <view class="title-wrapper">
+        <label class="title">{{feature.goods_name}}</label>
+      </view>
+      <label class="price" wx:if="{{ feature.goods_price!=='0' }}">{{feature.goods_price}} 积分</label>
+      <label class="price" wx:if="{{ feature.goods_price==='0' }}">{{feature.market_price}} 元</label>
+    </view>
+  </block>
+
 </scroll-view>
