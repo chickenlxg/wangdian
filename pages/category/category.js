@@ -1,36 +1,13 @@
 var app = getApp();
-import menus from './menus.js'  //添加
 Page({
   data: {
     categories: [],
-    //添加
-    text: "Page main",
-    background: [
-      {
-        color: 'green',
-        sort: 1
-      },
-      {
-        color: 'red',
-        sort: 2
-      },
-      {
-        color: 'yellow',
-        sort: 3
-      }
-    ],
-    indicatorDots: true,
-    vertical: false,
-    autoplay: false,
-    interval: 3000,
-    duration: 1200,
     toView: 'aa',
     selectedMenuId: 1,
     total: {
       count: 0,
       money: 0
     }
-    //添加
   },
   navigateToCategoryProduct(event) {
     var categoryId = event.currentTarget.dataset.cateId;
@@ -45,7 +22,6 @@ Page({
       toView: data.tag,
       selectedMenuId: data.id
     })
-    // this.data.toView = 'red'
   },
   addCount: function (event) {
     let data = event.currentTarget.dataset
@@ -57,9 +33,10 @@ Page({
           if (item2.id == data.id) {
             let dish = item2
             dish.count *= 1
+            dish.goods_price *= 1
             dish.count += 1
             total.count += 1
-            total.money += dish.price
+            total.money += dish.goods_price
             if (dish.count == '1') {
               wx.request({
                 url: app.serverURL + '/get/web/addcart.php',
@@ -104,9 +81,10 @@ Page({
           if (item2.id == data.id) {
             let dish = item2
             dish.count *= 1
-            dish.count -= 1;
+            dish.goods_price *= 1
+            dish.count -= 1
             total.count -= 1
-            total.money -= dish.price
+            total.money -= dish.goods_price
             if (dish.count == '0') {
               wx.request({
                 url: app.serverURL + '/get/web/cateCartDel.php',
@@ -140,6 +118,11 @@ Page({
       )
     });
   },
+  navigateToCart() {
+    wx.switchTab({
+      url: '../cart/cart'
+    });
+  },
   onShow() {
     var that = this;
     wx.request({
@@ -155,6 +138,33 @@ Page({
           categories: res.data
         })
       },
-    })
+    });
+
+    wx.request({
+      url: app.serverURL + '/get/web/cart.php',
+      header: {
+        'content-type': 'application/json'
+      },
+      data: {
+        userID: app.globalData.userID,
+        orderSn: 'no'
+      },
+      success: function (res) {
+        let total = that.data.total
+        var totalNumber = 0;
+        var totalPrice = 0;
+        res.data.forEach(item => {
+          item.PNUM = 1 * item.PNUM;
+          item.status = 1 * item.status;
+          totalNumber += item.PNUM;
+          totalPrice += item.PNUM * item.goods_price;
+          total.count = totalNumber;
+          total.money = totalPrice;
+        })
+        that.setData({
+          'total': total
+        });
+      },
+    });
   }
 });

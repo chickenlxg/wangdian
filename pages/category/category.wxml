@@ -1,14 +1,14 @@
 <view class="index">
   <view class="cart-tab-wrp">
     <view class="cart-item-total cart-tab-item">
-      <view class="cart-item-icon-wrp">
+      <view class="cart-item-icon-wrp" bindtap='navigateToCart'>
         <image class="cart-item-icon" src="./pic/orderBox.png" />
         <text hidden="{{total.count}}" class="cart-item-total-num bc_red">{{total.count}}</text>
       </view>
       <text class="cart-item-total-price">￥{{total.money}}</text>
     </view>
     <view class="cart-tab-item">
-      <navigator url="../Order/cert/cert?title=确认" class="cart-tab-item-btn" hover-class="navigator-hover">选好了</navigator>
+      <view  class="cart-tab-item-btn" bindtap='navigateToCart' >选好了</view>
     </view>
   </view>
   <view class="menu-wrp">

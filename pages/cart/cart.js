@@ -70,7 +70,6 @@ Page({
         });
       },
     });
-    console.log(this.data.cartList);
   },
 
   selectProduct(event) {
