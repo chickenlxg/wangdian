@@ -151,8 +151,8 @@ Page({
       },
       success: function (res) {
         let total = that.data.total
-        total.count = '0';
-        total.money = '0';
+        total.count = 0;
+        total.money = 0;
         var totalNumber = 0;
         var totalPrice = 0;
         res.data.forEach(item => {

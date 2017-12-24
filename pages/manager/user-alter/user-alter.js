@@ -86,8 +86,6 @@ Page({
             age: res.data.age
           });
         }
-        
-        console.log(that.data.userInfo);
       },
     })
   },

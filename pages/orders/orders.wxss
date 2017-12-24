@@ -96,6 +96,11 @@
     margin-left: 28.12rpx;
     color: #ff2b4d;
 }
+.count-price2 {
+    float: right;
+    margin-left: 28.12rpx;
+    color: #FFBE00;
+}
 .count-price::before {
     content: "实付：";
     color: #000;

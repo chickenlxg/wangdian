@@ -12,10 +12,9 @@
   </view>
   <view class="product-detail">
     <view class="detail product-name">{{product.goods_name}}</view>
-    <view class="detail product-price" wx:if="{{ product.goods_price!=='0' }}">{{product.goods_price}} 积分</view>
-    <view class="detail product-price" wx:if="{{ product.goods_price==='0' }}">{{product.market_price}} 元</view>
+    <view class="detail product-price" >{{product.goods_price}} 元</view>
     <view class=" product-market">
-      <text wx:if="{{ product.goods_price!=='0' }}">市场价：¥ {{product.market_price}}</text>
+      <text >市场价：¥ {{product.market_price}}</text>
       <text class="product-sold">已售{{product.sold_count}}件</text>
     </view>
   </view>
@@ -46,8 +45,7 @@
         </view>
         <image alt="" class="product-image" src="{{product.picture}}"></image>
         <view class="product-info">
-          <view class="stock-price text-primary p" wx:if="{{ product.goods_price!=='0' }}">{{goodsPrice}} 积分</view>
-          <view class="stock-price text-primary p" wx:if="{{ product.goods_price==='0' }}">{{product.market_price}} 元</view>
+          <view class="stock-price text-primary p" >{{goodsPrice}} 元</view>
           <view class="stock p">库存{{totalStock}}件</view>
         </view>
       </view>

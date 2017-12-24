@@ -2,9 +2,9 @@
 <scroll-view class="main" scroll-y="true" hidden="{{loading}}" class="order-confirm">
   <view class="">
     <view class="address" bindtap="navigateToAddress">
-      <image class="top-line" src="images/line.png"></image>
+      <image class="top-line" src="../settlement/images/line.png"></image>
       <view class="content">
-        <image class="address_icon" src="images/address.png"></image>
+        <image class="address_icon" src="../settlement/images/address.png"></image>
         <view class="address_text">
           <view class="adr">
             <text>{{address.consignee}}</text>
@@ -14,9 +14,9 @@
             <text>{{address.address}}</text>
           </view>
         </view>
-        <image class="arrow" src="images/arrow.png"></image>
+        <image class="arrow" src="../settlement/images/arrow.png"></image>
       </view>
-      <image class="bottom-line" src="images/line.png"></image>
+      <image class="bottom-line" src="../settlement/images/line.png"></image>
     </view>
     <view class="items-list">
       <view wx:for="{{cartList}}" wx:for-item="product" class="product">

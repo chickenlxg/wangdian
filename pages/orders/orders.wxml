@@ -11,10 +11,7 @@
         <view class="item-content">
           <view class="content-name">{{goods[0].goods_name}}</view>
           <view class="content-attr">{{goods[0].goods_attr}}</view>
-          <view class="content-count" wx:if="{{ goods[0].goods_price!='0' }}">{{goods[0].goods_price}} 积分
-            <view class="content-amount">×{{goods[0].PNUM}}</view>
-          </view>
-          <view class="content-count" wx:if="{{ goods[0].goods_price=='0' }}">{{goods[0].market_price}} 元
+          <view class="content-count" >{{goods[0].goods_price}} 积分
             <view class="content-amount">×{{goods[0].PNUM}}</view>
           </view>
         </view>
@@ -27,9 +24,9 @@
     </navigator>
     <view class="cell-count">
       <view class="count-amount">共{{goods.length}}样商品</view>
-      <view class="count-price" wx:if="{{ wxpay=='0' }}">{{totalPay}} 积分</view>
-      <view class="count-price" wx:if="{{ wxpay=='1' &&  masterPrice!='0'}}">{{masterPrice}} 元</view>
-      <view class="count-price" wx:if="{{ wxpay=='1' &&  masterPrice=='0'}}">{{wxPrice}} 元</view>
+      <view class="count-price" wx:if="{{ wxpay=='0' &&  status == '待付款'}}">{{totalPay}} 元</view>
+      <view class="count-price2" wx:if="{{ wxpay=='0' &&  status != '待付款'}}">{{wxPrice}} 积分</view>
+      <view class="count-price" wx:if="{{ wxpay=='1' }}">{{totalPay}} 元</view>
       <view class="count-carriage">运费：
         <text>￥{{shipping_price}} 0 元</text>
       </view>

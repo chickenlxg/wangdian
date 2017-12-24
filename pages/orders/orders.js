@@ -35,14 +35,11 @@ Page({
         activeNav: this.data.activeNav
       },
       success: function (res) {
-        console.log(res);
         that.setOrderData(res.data);
         that.setData({
           orderList: res.data,
           loading: false
         });
-        console.log(that.data.orderList);
-
       },
     })
   },
@@ -50,18 +47,15 @@ Page({
     data.forEach((itm) => {
       var totalNumber = 0;
       var totalPrice = 0;
-      var masterPrice = 0;
       var wxPrice = 0;
       itm.goods.forEach(item => {
         item.PNUM *= 1;
         totalNumber += item.PNUM;
         totalPrice += item.PNUM * item.goods_price;
-        masterPrice += item.PNUM * item.market_price;
       })
-      itm.wxPrice = (totalPrice * 0.04).toFixed(2);
+      itm.wxPrice = (totalPrice * 10);
       itm.totalNumber = totalNumber;
-      itm.totalPay = totalPrice;
-      itm.masterPrice = masterPrice;
+      itm.totalPay = totalPrice.toFixed(2);
       itm.order = {
         orderStatus: itm.status,
         orderSn: itm.orderSn,
@@ -108,7 +102,6 @@ Page({
       content: '你是否需要取消订单',
       showCancel: true,
       success: (res) => {
-        console.log(res);
         if (res.confirm == 0) {
           return;
         }
@@ -253,7 +246,6 @@ Page({
       content: '你是否要删除订单',
       showCancel: true,
       success: (res) => {
-        console.log(res);
         if (res.confirm == 0) {
           return;
         }
@@ -296,7 +288,7 @@ Page({
   payOrder(e) {
     const orderSn = e.target.dataset.orderSn;
     wx.navigateTo({
-      url: '../settlement/settlement?orderSn=' + orderSn,
+      url: '../settlement2/settlement2?orderSn=' + orderSn,
     });
   }
 });

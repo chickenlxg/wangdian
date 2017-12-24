@@ -273,7 +273,7 @@
 }
 
 .settlement2 .price {
-  color: #09bb07;
+  color: #FFBE00;
 }
 
 .settlement2 .text {
@@ -289,7 +289,7 @@
 
 .settlement2 button {
   float: right;
-  background-color: #09bb07;
+  background-color: #FFBE00;
   color: #fff;
   width: 185rpx;
   height: 80rpx;

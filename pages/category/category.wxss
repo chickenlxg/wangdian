@@ -190,7 +190,7 @@
 
 .dish-item-pic image {
   width: 158rpx;
-  height: 120rpx;
+  height: 158rpx;
   margin: 0 auto;
 }
 
@@ -213,6 +213,9 @@
 .dish-item-money {
   color: #f50909;
   font-size: 26rpx;
+  margin-top:41rpx;
+  display:block;
+
 }
 
 .dish-footer {

@@ -59,8 +59,6 @@ Page({
     wx.scanCode({
       success: (res) => {
         var result = res.result;
-
-        console.log(res);
         if (result == 'jinnuotianyifu2017dahuiqiandao') {
           wx.request({
             url: app.serverURL + '/get/web/integralAdd.php',

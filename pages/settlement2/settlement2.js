@@ -11,26 +11,40 @@ Page({
     orderSn: null
   },
   onLoad(options) {
-    var carList = JSON.parse(options.list);
-    this.setData({ orderSn: carList[0] });
-    const orderSn = carList[0];
+    var orderSn = options.orderSn;
     var totalNumber = 0;
     var totalPrice = 0;
     var towxprice = 0;
-    var that = this;
-    var newList = carList.slice(1);
-    newList.forEach(item => {
-      totalNumber += item.PNUM;
-      totalPrice += item.PNUM * item.goods_price;
-      towxprice = totalPrice * 10;
-    })
-    that.setData({
-      cartList: newList,
-      loading: false,
-      totalNumber: totalNumber,
-      totalPay: totalPrice.toFixed(2),
-      wxPay: towxprice
+    this.setData({
+      orderSn: options.orderSn
     });
+
+    var that = this;
+    wx.request({
+      url: app.serverURL + '/get/web/cart.php',
+      header: {
+        'content-type': 'application/json'
+      },
+      data: {
+        orderSn: options.orderSn
+      },
+      success: function (res) {
+        res.data.forEach(item => {
+          totalNumber += item.PNUM;
+          totalPrice += item.PNUM * item.goods_price;
+          towxprice = totalPrice * 10;
+        })
+        that.setData({
+          cartList: res.data,
+          loading: false,
+          totalNumber: totalNumber,
+          totalPay: totalPrice.toFixed(2),
+          wxPay: towxprice
+        });
+
+      },
+    });
+
 
     wx.request({
       url: app.serverURL + '/get/web/addressGet.php',
@@ -39,7 +53,7 @@ Page({
       },
       data: {
         userID: app.globalData.userID,
-        orderSn: carList[0]
+        orderSn: options.orderSn
       },
       success: function (res) {
         that.setData({ address: res.data })
@@ -88,7 +102,7 @@ Page({
         data: {
           userID: app.globalData.userID,
           orderSn: this.data.orderSn,
-          totalPay: this.data.totalPay,
+          totalPay: this.data.wxPay,
           userIntegral: this.data.userIntegral
         },
         success: function (res) {

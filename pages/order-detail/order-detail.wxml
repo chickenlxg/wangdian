@@ -28,10 +28,7 @@
             <text>{{product.goods_name}}</text>
           </view>
           <view class="price">
-            <view class="real" wx:if="{{ product.goods_price!='0' }}"> {{product.goods_price}} 积分
-              <view class="num">x{{product.PNUM}}</view>
-            </view>
-            <view class="real" wx:if="{{ product.goods_price=='0' }}"> {{product.market_price}} 元
+            <view class="real"> {{product.goods_price}} 元
               <view class="num">x{{product.PNUM}}</view>
             </view>
           </view>
@@ -39,11 +36,11 @@
       </view>
     </view>
     <view class="statistics">
-      <view class="border-bottom" wx:if="{{ wxpay==='0' }}"> 商品总额
-        <text> {{totalPay}} 积分</text>
+      <view class="border-bottom" wx:if="{{ wxpay == '1' }}"> 商品总额
+        <text> {{totalPay}} 元</text>
       </view>
-      <view class="border-bottom" wx:if="{{ wxpay==='1' }}"> 商品总额
-        <text> {{wxPrice}} 元</text>
+      <view class="border-bottom" wx:if="{{ wxpay == '0' }}"> 积分兑换
+        <text> {{wxPrice}} 积分</text>
       </view>
     </view>
     <view class="item-amount">
@@ -52,6 +49,9 @@
       </view>
       <view class="last-child colora0">
         <text>创建时间：{{order.creatTime}}</text>
+      </view>
+      <view class="last-child colora0" wx:if="{{ order.payTime != '0' }}">
+        <text>支付时间：{{order.payTime}}</text>
       </view>
     </view>
     <view class="btn-line" hidden="{{order.isButtonShow}}">

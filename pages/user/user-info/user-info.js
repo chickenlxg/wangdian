@@ -34,7 +34,6 @@ Page({
         sourceType: ['album', 'camera'],
         success(res) {
           const tempFilePaths = res.tempFilePaths;
-          console.log(tempFilePaths[0]);
           wx.uploadFile({
             url: resource.getUrl('/wx/upload'),
             filePath: tempFilePaths[0],
@@ -45,7 +44,6 @@ Page({
             success(res) {
               if (res.statusCode != 200) {
                 resource.showTips(that, '图片上传失败');
-                console.log(res);
                 return;
               }
               var icon = res.data;
@@ -60,7 +58,6 @@ Page({
               });
             },
             fail(res) {
-              console.log(res);
               resource.showTips(that, '图片上传失败');
             }
           });

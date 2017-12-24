@@ -44,21 +44,18 @@ Page({
 
         var totalNumber = 0;
         var totalPrice = 0;
-        var masterPrice = 0;
         var wxPrice = 0;
         res.data.forEach(item => {
           totalNumber += item.PNUM;
           totalPrice += item.PNUM * item.goods_price;
-          masterPrice += item.PNUM * item.market_price;
         })
-        wxPrice = totalPrice * 0.04;
+        wxPrice = totalPrice * 10;
         that.setData({
           cartList: res.data,
           loading: false,
           totalNumber: totalNumber,
-          totalPay: totalPrice,
-          masterPrice: masterPrice,
-          wxPrice: totalPrice == '0' ? masterPrice.toFixed(2) : wxPrice.toFixed(2)
+          totalPay: totalPrice.toFixed(2),
+          wxPrice: wxPrice
         });
       },
     });
@@ -72,7 +69,6 @@ Page({
         orderSn: options.subOrderSn
       },
       success: function (res) {
-        console.log(res);
         that.setData({
           wxpay: res.data.wxpay,
           order: {
@@ -80,73 +76,14 @@ Page({
             refund_status: res.data.refund_status,
             orderSn: res.data.orderSn,
             isButtonHidden: res.data.status == "待付款" ? true : false,
-            creatTime: res.data.creatTime
+            creatTime: res.data.creatTime,
+            payTime: res.data.payTime
           }
         });
       }
     });
   },
 
-
-
-  postOrder(options) {
-    this.setData({ exec: true });
-    var that = this;
-    if (this.data.totalPay > this.data.userIntegral) {
-      that.setData({
-        exec: false,
-        toast: {
-          toastClass: 'yatoast',
-          toastMessage: '积分不足'
-        }
-      });
-      setTimeout(() => {
-        that.setData({
-          toast: {
-            toastClass: '',
-            toastMessage: ''
-          }
-        });
-      }, 2000);
-    } else {
-      wx.request({
-        url: app.serverURL + '/get/web/pay.php',
-        header: {
-          'content-type': 'application/json'
-        },
-        data: {
-          userID: app.globalData.userID,
-          orderSn: this.data.orderSn,
-          totalPay: this.data.totalPay,
-          userIntegral: this.data.userIntegral
-        },
-        success: function (res) {
-          if (res.statusCode == '200') {
-            that.setData({ exec: false });
-            wx.switchTab({
-              url: '../user/user',
-            });
-          } else {
-            that.setData({
-              exec: false,
-              toast: {
-                toastClass: 'yatoast',
-                toastMessage: '获取支付验证错误!'
-              }
-            });
-            setTimeout(() => {
-              that.setData({
-                toast: {
-                  toastClass: '',
-                  toastMessage: ''
-                }
-              });
-            }, 2000);
-          };
-        }
-      });
-    }
-  },
   navigateToAddress() {
     var url = this.data.order.orderStatus == '待付款' ? '../addresses/addresses?type=order-detail&orderSn=' + this.data.orderSn : '';
     if (url) {
@@ -168,7 +105,6 @@ Page({
       content: '你是否需要取消订单',
       showCancel: true,
       success: (res) => {
-        console.log(res);
         if (res.confirm == 0) {
           return;
         }
@@ -292,7 +228,6 @@ Page({
       content: '你是否要删除订单',
       showCancel: true,
       success: (res) => {
-        console.log(res);
         if (res.confirm == 0) {
           return;
         }

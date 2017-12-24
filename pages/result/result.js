@@ -8,7 +8,6 @@ Page({
     }
   },
   onLoad() {
-    console.log(app.globalData);
     const src = app.globalData.type === 'success' ? 'success.png' : 'fail.png';
     const typeText = app.globalData.type === 'success' ? '支付成功' : '支付失败';
     const type = app.globalData.type === 'success' ? 1 : 0;

@@ -26,7 +26,6 @@ Page({
         userID: app.globalData.userID
       },
       success: function (res) {
-        console.log(res);
         product = res.data;
         that.setData({
           product: res.data,

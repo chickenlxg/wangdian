@@ -1,6 +1,5 @@
 const esx = {
   show() {
-    console.log("xx");
   },
   showTips(data) {
     let isShow = data.showTips || false;

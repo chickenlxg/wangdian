@@ -19,7 +19,8 @@
     "pages/about/about",
     "pages/service/service",
     "pages/manager/user-alter/user-alter",
-    "pages/user/user-alter/user-alter"
+    "pages/user/user-alter/user-alter",
+    "pages/settlement2/settlement2"
   ],
   "window": {
     "backgroundTextStyle": "light",

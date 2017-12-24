@@ -6,10 +6,13 @@ Page({
     banners: [],
     activities: [],
     shop_info: [],
-    features: []
+    features: [],
+    cheapfeatures: [],
+    newfeatures:[],
+    classicalfeatures:[]
   },
 
-  onLoad: function (options) {
+  onShow: function () {
     var that = this;
     wx.request({
       url: app.serverURL + '/get/web/swiper.php',
@@ -45,6 +48,17 @@ Page({
       },
     })
     wx.request({
+      url: app.serverURL + '/get/web/cheapFeatures.php',
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        that.setData({
+          cheapfeatures: res.data
+        })
+      },
+    })
+    wx.request({
       url: app.serverURL + '/get/web/features.php',
       header: {
         'content-type': 'application/json'
@@ -52,6 +66,28 @@ Page({
       success: function (res) {
         that.setData({
           features: res.data
+        })
+      },
+    })
+    wx.request({
+      url: app.serverURL + '/get/web/newFeatures.php',
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        that.setData({
+          newfeatures: res.data
+        })
+      },
+    })
+    wx.request({
+      url: app.serverURL + '/get/web/classicalFeatures.php',
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        that.setData({
+          classicalfeatures: res.data
         })
       },
     })

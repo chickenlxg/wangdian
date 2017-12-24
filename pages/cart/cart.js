@@ -9,7 +9,8 @@ Page({
     checkedStatus: true,
     buyNumber: 0,
     buyPrice: 0,
-    orderSn: null
+    orderSn: null,
+    settlementList:{}
   },
   onShow() {
     if (app.globalData.isUser == '0') {
@@ -32,8 +33,6 @@ Page({
         var totalPrice = 0;
         var buyNumber = 0;
         var buyPrice = 0;
-        var masterbuyPrice = 0;
-        var mastertotalPrice = 0;
         res.data.forEach(item => {
           item.PNUM = 1 * item.PNUM;
           item.status = 1 * item.status;
@@ -42,11 +41,9 @@ Page({
           } else {
             buyNumber += item.PNUM;
             buyPrice += item.PNUM * item.goods_price;
-            masterbuyPrice += item.PNUM * item.market_price;
           }
           totalNumber += item.PNUM;
           totalPrice += item.PNUM * item.goods_price;
-          mastertotalPrice += item.PNUM * item.market_price;
           if (item.PNUM == item.total_stock) {
             item.plus_class = "disabled";
           } else {
@@ -63,10 +60,8 @@ Page({
           loading: false,
           totalNumber: totalNumber,
           totalPrice: totalPrice,
-          mastertotalPrice: mastertotalPrice,
           buyNumber: buyNumber,
-          buyPrice: buyPrice,
-          masterbuyPrice: masterbuyPrice
+          buyPrice: buyPrice
         });
       },
     });
@@ -79,8 +74,6 @@ Page({
     var totalPrice = 0;
     var buyNumber = 0;
     var buyPrice = 0;
-    var masterbuyPrice = 0;
-    var mastertotalPrice = 0;
     var id = [];
     checkedStatus = checkedStatus === true;
     var changeStatus = true;
@@ -106,11 +99,9 @@ Page({
       } else {
         buyNumber += item.PNUM;
         buyPrice += item.PNUM * item.goods_price;
-        masterbuyPrice += item.PNUM * item.market_price;
       }
       totalNumber += item.PNUM;
       totalPrice += item.PNUM * item.goods_price;
-      mastertotalPrice += item.PNUM * item.market_price;
     });
     changeStatus = cartId == 0 ? !checkedStatus : changeStatus;
     this.setData({
@@ -118,10 +109,8 @@ Page({
       checkedStatus: changeStatus,
       totalNumber: totalNumber,
       totalPrice: totalPrice,
-      mastertotalPrice: mastertotalPrice,
       buyNumber: buyNumber,
-      buyPrice: buyPrice,
-      masterbuyPrice: masterbuyPrice
+      buyPrice: buyPrice
     });
   },
   // 改变商品数量
@@ -132,12 +121,10 @@ Page({
     var totalPrice = 0;
     var buyNumber = 0;
     var buyPrice = 0;
-    var masterbuyPrice = 0;
-    var mastertotalPrice = 0;
     this.data.cartList.forEach(item => {
       if (item.pid == cartId) {
         if (optType == 'plus') {
-          if (item.PNUM == item.total_stock  ) {
+          if (item.PNUM == item.total_stock) {
             this.setData({
               toast: {
                 toastClass: 'yatoast',
@@ -187,7 +174,7 @@ Page({
         } else {
           item.decr_class = "";
         }
-        
+
         wx.request({
           url: app.serverURL + '/get/web/productNumChange.php',
           header: {
@@ -205,20 +192,16 @@ Page({
       } else {
         buyNumber += item.PNUM;
         buyPrice += item.PNUM * item.goods_price;
-        masterbuyPrice += item.PNUM * item.market_price;
       }
       totalNumber += item.PNUM;
       totalPrice += item.PNUM * item.goods_price;
-      mastertotalPrice += item.PNUM * item.market_price;
     });
     this.setData({
       cartList: this.data.cartList,
       totalNumber: totalNumber,
       totalPrice: totalPrice,
-      mastertotalPrice: mastertotalPrice,
       buyNumber: buyNumber,
-      buyPrice: buyPrice,
-      masterbuyPrice: masterbuyPrice,
+      buyPrice: buyPrice
     });
   },
   // 去结算页面
@@ -247,14 +230,16 @@ Page({
         },
         data: {
           userID: app.globalData.userID,
-          totalPrice: this.data.buyPrice,
-          mastertotalPrice: this.data.masterbuyPrice
+          totalPrice: this.data.buyPrice
         },
         success: function (res) {
-
           //添加订单号
+          var settlementList = [];
+          var int = 1;
+          settlementList[0] = res.data;
           that.data.cartList.forEach(item => {
             if (item.status == 1) {
+              settlementList[int] = item;
               wx.request({
                 url: app.serverURL + '/get/web/cartOrderSnAdd.php',
                 header: {
@@ -262,7 +247,6 @@ Page({
                 },
                 data: {
                   id: item.pid,
-                  market_price: item.market_price,
                   orderSn: res.data,
                   pid: item.id,
                   sold_count: item.sold_count,
@@ -270,26 +254,13 @@ Page({
                   PNUM: item.PNUM
                 }
               })
+              int++;
             }
           });
-
-          if (that.data.masterbuyPrice != '0' && that.data.buyPrice != '0') {
-            wx.navigateTo({
-              url: '../orders/orders?t=待付款'
-            });
-          } 
-          
-          if (that.data.masterbuyPrice == '0' && that.data.buyPrice != '0') {
-            wx.navigateTo({
-              url: '../settlement/settlement?orderSn=' + res.data
-            });
-          }
-
-          if (that.data.masterbuyPrice != '0' && that.data.buyPrice == '0') {
-            wx.navigateTo({
-              url: '../settlement/settlement?orderSn=M' + res.data
-            });
-          }
+          var list = JSON.stringify(settlementList);
+          wx.navigateTo({
+            url: '../settlement/settlement?list=' + list
+          });
         }
       })
     }
@@ -310,8 +281,6 @@ Page({
         var totalPrice = 0;
         var buyNumber = 0;
         var buyPrice = 0;
-        var masterbuyPrice = 0;
-        var mastertotalPrice = 0;
         var delKey = 0;
         cartList.forEach((item, key) => {
           if (item.pid == id) {
@@ -322,11 +291,9 @@ Page({
             } else {
               buyNumber += item.PNUM;
               buyPrice += item.PNUM * item.goods_price;
-              masterbuyPrice += item.PNUM * item.market_price;
             }
             totalNumber += item.PNUM;
             totalPrice += item.PNUM * item.goods_price;
-            mastertotalPrice += item.PNUM * item.market_price;
           }
         });
         cartList.splice(delKey, 1);
@@ -346,10 +313,8 @@ Page({
                 cartList: cartList,
                 totalNumber: totalNumber,
                 totalPrice: totalPrice,
-                mastertotalPrice: mastertotalPrice,
                 buyNumber: buyNumber,
-                buyPrice: buyPrice,
-                masterbuyPrice: masterbuyPrice,
+                buyPrice: buyPrice
               });
             }
           }
