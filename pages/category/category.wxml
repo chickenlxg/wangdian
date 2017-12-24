@@ -17,8 +17,8 @@
       <block wx:for="{{categories}}" wx:key="id" wx:for-item="menu">
         <view class="menu-item" data-id="{{menu.id}}" data-tag="{{menu.link_url}}" bindtap="selectMenu">
           <view class="menu-item-wrp">
-            <view class="{{selectedMenuId == menu.id ? 'bc_red' : 'bc_gray'}} m-item-icon">
-              <image class="image" src="./pic/ding-ico1.png" />
+            <view class="m-item-icon">
+              <image class="image" src="{{selectedMenuId == menu.id ? menu.image_src + '.png' : menu.image_src + '_no.png' }}" />
             </view>
             <view>
               <text class="m-item-title">{{menu.title}}</text>

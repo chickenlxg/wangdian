@@ -10,22 +10,22 @@
   </view>
   <view class="feature-header">
     <icon>
-      <image class="header-img" src="./images/feature.png"></image>
+      <image class="header-img" src="./images/head.png"></image>
     </icon>
-    <text>热门分类</text>
+    <image class="header-text" src="./images/rmfl.png"></image>
   </view>
   <view class="section activity-list">
     <view class="activity" wx:for="{{activities}}" wx:for-item="activity" data-activity-id="{{activity.link_id}}" data-activity-type="{{activity.type}}" data-activity-title="{{activity.title}}" bindtap="navigateToActivity">
-      <image mode="aspectFill" src="{{activity.image_src}}"></image>
+      <image mode="aspectFill" src="{{activity.image_src + '.png'}}"></image>
       <label>{{activity.title}}</label>
     </view>
   </view>
 
   <view class="feature-header">
     <icon>
-      <image class="header-img" src="./images/feature.png"></image>
+      <image class="header-img" src="./images/head.png"></image>
     </icon>
-    <text>限时优惠</text>
+    <image class="header-text" src="./images/xsyh.png"></image>
   </view>
   <view class="myTrump">
     <scroll-view scroll-x-="true" class="content">
@@ -46,9 +46,9 @@
 
   <view class="feature-header">
     <icon>
-      <image class="header-img" src="./images/feature.png"></image>
+      <image class="header-img" src="./images/head.png"></image>
     </icon>
-    <text>热销商品</text>
+    <image class="header-text" src="./images/rxsp.png"></image>
   </view>
   <view class="product-group">
     <view class="product" wx:for="{{features}}" wx:for-item="product" data-product-id="{{product.id}}" bindtap="navigateToProduct">
@@ -68,9 +68,9 @@
 
   <view class="feature-header">
     <icon>
-      <image class="header-img" src="./images/feature.png"></image>
+      <image class="header-img" src="./images/head.png"></image>
     </icon>
-    <text>新品上架</text>
+    <image class="header-text" src="./images/xpsj.png"></image>
   </view>
   <view class="product-group">
     <view class="product" wx:for="{{newfeatures}}" wx:for-item="product" data-product-id="{{product.id}}" bindtap="navigateToProduct">
@@ -89,9 +89,9 @@
 
   <view class="feature-header">
     <icon>
-      <image class="header-img" src="./images/feature.png"></image>
+      <image class="header-img" src="./images/head.png"></image>
     </icon>
-    <text>经典系列</text>
+    <image class="header-text" src="./images/jdxl.png"></image>
   </view>
   <view class="product-group">
     <view class="product" wx:for="{{classicalfeatures}}" wx:for-item="product" data-product-id="{{product.id}}" bindtap="navigateToProduct">

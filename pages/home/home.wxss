@@ -123,10 +123,17 @@ swiper-item image {
 }
 
 .header-img {
-  width: 55rpx;
+  width: 110rpx;
+  height: 110rpx;
+  margin-left: 6px;
+  margin-right: 3rpx;
+}
+
+.header-text {
+  width: 162rpx;
   height: 40rpx;
   margin-right: 20rpx;
-  padding: 24rpx 0;
+  padding: 32rpx 0;
 }
 
 .content {
@@ -140,7 +147,7 @@ swiper-item image {
 
 .myTrump {
   width: 100%;
-  height: 25vh;
+  height: 23vh;
   display: flex;
   /* justify-content: flex-start;
         align-items: center;
@@ -247,7 +254,7 @@ swiper-item image {
 }
 
 .product-content {
-  margin:0px 15rpx;
+  margin: 0px 15rpx;
   overflow: hidden;
 }
 
