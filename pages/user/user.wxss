@@ -72,6 +72,7 @@
     margin-bottom: 23.44rpx;
     font-size: 25.78rpx;
     height: 166.40rpx;
+    width:100%;
 }
 
 .order-cell {

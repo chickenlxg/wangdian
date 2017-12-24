@@ -33,7 +33,6 @@ swiper-item image {
   height: 117rpx;
   margin: 0 auto;
   margin-top: 28.08rpx;
-  border-radius: 50%;
 }
 
 .activity label {

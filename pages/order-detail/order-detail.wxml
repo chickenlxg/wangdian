@@ -36,10 +36,13 @@
       </view>
     </view>
     <view class="statistics">
-      <view class="border-bottom" wx:if="{{ wxpay == '1' }}"> 商品总额
+      <view class="border-bottom" wx:if="{{ wxpay == '0' && order.payTime == '0' }}"> 商品总额
         <text> {{totalPay}} 元</text>
       </view>
-      <view class="border-bottom" wx:if="{{ wxpay == '0' }}"> 积分兑换
+      <view class="border-bottom" wx:if="{{ wxpay == '1' && order.payTime != '0' }}"> 商品总额
+        <text> {{totalPay}} 元</text>
+      </view>
+      <view class="border-bottom" wx:if="{{ wxpay == '0' && order.payTime != '0' }}"> 积分兑换
         <text> {{wxPrice}} 积分</text>
       </view>
     </view>

@@ -69,6 +69,7 @@ Page({
         orderSn: options.subOrderSn
       },
       success: function (res) {
+        console.log(res);
         that.setData({
           wxpay: res.data.wxpay,
           order: {
@@ -95,7 +96,7 @@ Page({
   payOrder(e) {
     const orderSn = e.target.dataset.orderSn;
     wx.navigateTo({
-      url: '../settlement/settlement?orderSn=' + orderSn,
+      url: '../settlement2/settlement2?orderSn=' + orderSn,
     });
   },
   cancelOrder(e) {
